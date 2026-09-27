@@ -1,0 +1,41 @@
+# NexusGrave -- a massive overhaul of player death.
+#
+# Every death still happens exactly like vanilla -- this plugin only changes what happens to the
+# drops and XP afterward. Fixed shapes (the four condition tiers, the corpse-run debuff's own
+# two-effect makeup) stay in code; the shared numbers below are here, same "shared numbers in
+# config, fixed shapes in code" split this whole family already uses.
+
+enabled: true
+
+decay:
+  # How often (real minutes) every registered, non-permanent, unclaimed grave loses decay.
+  interval-minutes: 45
+  # How much decay is lost per interval. At the defaults below, an unclaimed, non-permanent grave
+  # collapses for good after 100.0 / 2.5 = 40 intervals (30 real hours).
+  amount-per-interval: 2.5
+
+rite:
+  # The real, consumable "rite of passage" item -- right-click your own fresh grave while holding
+  # one to make THAT grave permanently immune to decay/collapse. Deliberately NOT
+  # TOTEM_OF_UNDYING (see this project's own Material stub comment for why); an earned cost, not a
+  # free pass, and it never protects a grave from being looted by anyone else.
+  permanence-item: NETHER_STAR
+
+corpse-run:
+  # How often (real seconds) the slowness/weakness debuff is refreshed and the compass target is
+  # re-checked for every online player with an active (unclaimed, uncollapsed) grave.
+  tick-interval-seconds: 10
+  # Duration (real ticks) each refresh applies the debuff for -- kept longer than the tick
+  # interval above so a brief lag spike never lets it lapse before the next refresh.
+  debuff-duration-ticks: 260
+  slowness-amplifier: 1
+  weakness-amplifier: 0
+
+menu:
+  title: "Grave Contents"
+
+epitaph:
+  prompt-prefix: "Epitaph set for your next grave: "
+  # Longest a pre-written epitaph is allowed to be; anything past this is trimmed when it's set,
+  # not when it's finally read.
+  max-length: 96
